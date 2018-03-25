@@ -32,6 +32,7 @@
           <ion-item> {{beaconData.nid}}</ion-item>
           <ion-item> {{beaconData.rssi}}</ion-item>
         </ion-list>
+        <button ion-button color="danger" (click)="stopScanningForBeacons()">Stop scanning</button>
       </ion-card-content>
     </ion-card>
   </ng-template>

@@ -26,4 +26,9 @@ export class HomePage {
     });
   }
 
+  stopScanningForBeacons(){
+    evothings.eddystone.stopScan();
+    this.beaconData = null;
+  }
+
 }
