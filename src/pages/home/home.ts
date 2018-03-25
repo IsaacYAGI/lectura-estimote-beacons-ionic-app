@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 
 @Component({
@@ -7,15 +7,22 @@ import { NavController, Platform } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, private platform: Platform) {
+  beaconData : any;
+
+  constructor(private changeDetector: ChangeDetectorRef, public navCtrl: NavController, private platform: Platform) {
 
   }
 
   startScanningForBeacons(){
     this.platform.ready().then(() => {
-      evothings.eddystone.startScan((beaconData) => {
-        alert(JSON.stringify(beaconData));
-      }, error => alert(JSON.stringify(error)));
+      evothings.eddystone.startScan((data) => {
+        //alert(JSON.stringify(data));
+        this.beaconData = data;
+        setTimeout(() => {
+          this.changeDetector.detectChanges();
+        },
+        1000);
+      }, error => console.log(JSON.stringify(error)));
     });
   }
 
