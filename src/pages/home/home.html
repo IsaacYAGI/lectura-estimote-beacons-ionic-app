@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="!beaconData; else beaconFound">
+  <div *ngIf="beaconData.length == 0; else beaconFound">
 
     <ion-card>
       <ion-card-header>
@@ -27,10 +27,10 @@
         Beacon found
       </ion-card-header>
       <ion-card-content>
-        <ion-list>
-          <ion-item> {{beaconData.address}}</ion-item>
-          <ion-item> {{beaconData.nid}}</ion-item>
-          <ion-item> {{beaconData.rssi}}</ion-item>
+        <ion-list *ngFor="let beacon of beaconData">
+          <ion-item> {{beacon.address}}</ion-item>
+          <ion-item> {{beacon.nid}}</ion-item>
+          <ion-item> {{beacon.rssi}}</ion-item>
         </ion-list>
         <button ion-button color="danger" (click)="stopScanningForBeacons()">Stop scanning</button>
       </ion-card-content>
