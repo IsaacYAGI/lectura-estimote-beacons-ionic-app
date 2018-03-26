@@ -14,35 +14,21 @@ export class HomePage {
   }
 
   startScanningForBeacons(){
+    //Una vez que se haga la carga de las librerias nativas se puede comenzar a buscar beacons
     this.platform.ready().then(() => {
       evothings.eddystone.startScan((data) => {
-        //console.log("YAGI-" + JSON.stringify(data));
-        //Si no se encuentra el beacon leido por el dispositivo en la lista...
-        console.log("YAGI - data=" + JSON.stringify(data));
-        //var buscarBeacon = this.beaconData.find(element => element.address == data.address);
-        let buscarBeacon = null;
-        if (this.beaconData !== null){
-          buscarBeacon = this.beaconData.find(function(element){
-            console.log("YAGI-" + "Buscando... element vs data="+element.address + " === " + data.address);
-            return element.address === data.address
-          });
-          
-          if (buscarBeacon === undefined){
+
+        //Si el arreglo no esta vacio se realiza la busqueda
+        if (this.beaconData.length !== 0){
+            
+          //Si no se encontró el elemento registrado actualmente se agrega al objeto beaconData
+          if (this.beaconData.find(element => element.address === data.address) === undefined)
             this.beaconData.push(data);
-          }
 
+          //Si el elemento efectivamente esta vacio se agrega al arreglo
         }else this.beaconData.push(data);
-        console.log("YAGI-" + "buscarBeacon="+JSON.stringify(buscarBeacon));
-        /*
-        if ( buscarBeacon !== undefined){
-
-          //Se agrega a la lista
-          this.beaconData.push(data);
-          console.log("YAGI-" + "Se agrego un nuevo beacon a la lista!");
-        }else{
-          console.log("YAGI-" + "Buscarbeacon="+JSON.stringify(buscarBeacon));
-        }
-        */
+        
+        //Se verifica por cambios en la pantalla cada 1 segundo
         setTimeout(() => {
           this.changeDetector.detectChanges();
         },
@@ -51,6 +37,7 @@ export class HomePage {
     });
   }
 
+  //Permite detener la deteccion de beacons
   stopScanningForBeacons(){
     evothings.eddystone.stopScan();
     this.beaconData = [];
