@@ -28,9 +28,10 @@
       </ion-card-header>
       <ion-card-content>
         <ion-list *ngFor="let beacon of beaconData">
-          <ion-item> {{beacon.address}}</ion-item>
-          <ion-item> {{beacon.nid}}</ion-item>
-          <ion-item> {{beacon.rssi}}</ion-item>
+          <ion-item> URL: {{beacon.url}}</ion-item>
+          <ion-item> Address: {{beacon.address}}</ion-item>
+          <ion-item> NID: {{beacon.nid}}</ion-item>
+          <ion-item> RSSI: {{beacon.rssi}}</ion-item>
         </ion-list>
         <button ion-button color="danger" (click)="stopScanningForBeacons()">Stop scanning</button>
       </ion-card-content>
